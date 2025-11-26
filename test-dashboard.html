@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Dashboard</title>
+</head>
+<body>
+    <h1>Test d'accès au fichier progress.json</h1>
+    <button onclick="testFetch()">Tester l'accès</button>
+    <div id="result"></div>
+
+    <script>
+        const PROGRESS_URL = 'https://raw.githubusercontent.com/walidoxrm/learningMA/main/progress.json';
+        
+        async function testFetch() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Test en cours...';
+            
+            try {
+                // Test 1 : Accès direct
+                console.log('Test 1 : Accès direct...');
+                const response1 = await fetch(PROGRESS_URL);
+                console.log('Status:', response1.status);
+                
+                if (response1.ok) {
+                    const data = await response1.json();
+                    resultDiv.innerHTML = `
+                        <h2>✅ Succès !</h2>
+                        <p>Fichier accessible. Projet : ${data.project}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<h2>❌ Erreur HTTP ${response1.status}</h2>`;
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                resultDiv.innerHTML = `
+                    <h2>❌ Erreur CORS</h2>
+                    <p>${error.message}</p>
+                    <p><strong>Solution :</strong> Ouvre ce fichier via un serveur HTTP ou utilise GitHub Pages.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
