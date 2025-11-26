@@ -1,0 +1,42 @@
+{
+  "project": "Apprentissage Python",
+  "created_at": "2025-11-26T15:49:43.641977+00:00",
+  "sessions": [],
+  "topics": [
+    {
+      "name": "Installation environnement",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Scripts Python de base",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Fonctions et modularisation",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Lecture/écriture fichiers",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Menus ou mini-UI",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Tests et debugging",
+      "done": false,
+      "updated_at": null
+    },
+    {
+      "name": "Git + README",
+      "done": false,
+      "updated_at": null
+    }
+  ]
+}

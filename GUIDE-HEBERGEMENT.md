@@ -130,7 +130,7 @@ Modifie `progress_tracker.py` pour auto-sync après chaque commande (optionnel).
 
 Une fois déployé :
 
-1. **URL du dashboard** : `https://TON_USERNAME.github.io/learn-by-doing/dashboard.html`
+1. **URL du dashboard** : `https://walidoxrm.github.io/learningMA/dashboard.html`
 2. **Actualisation automatique** : Le dashboard se met à jour toutes les 30 secondes
 3. **Actualisation manuelle** : Bouton "🔄 Actualiser"
 
