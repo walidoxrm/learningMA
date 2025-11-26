@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi d'Avancement - Learn by Doing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .progress-bar-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sessions, .topics {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .sessions h2, .topics h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .session-item, .topic-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .session-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .session-item .meta {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topic-item.done {
+            border-left-color: #28a745;
+        }
+
+        .topic-item.done .topic-name {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge.done {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge.todo {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #5568d3;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Suivi d'Avancement</h1>
+            <p id="project-name">Chargement...</p>
+        </div>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Séances</h3>
+                <div class="value" id="sessions-count">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Notions Acquises</h3>
+                <div class="value" id="topics-done">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Progression</h3>
+                <div class="value" id="progress-percent">0%</div>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <h2>Progression Globale</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%">0%</div>
+            </div>
+        </div>
+
+        <div class="sessions">
+            <h2>📚 Séances</h2>
+            <div id="sessions-list">Chargement...</div>
+        </div>
+
+        <div class="topics">
+            <h2>✅ Notions</h2>
+            <div id="topics-list">Chargement...</div>
+        </div>
+
+        <button class="refresh-btn" onclick="loadProgress()">🔄 Actualiser</button>
+    </div>
+
+    <script>
+        // URL du fichier progress.json (à adapter selon ton hébergement)
+        const PROGRESS_URL = 'https://raw.githubusercontent.com/TON_USERNAME/TON_REPO/main/progress.json';
+        
+        // Alternative : si tu utilises GitHub Pages, utilise cette URL :
+        // const PROGRESS_URL = './progress.json';
+
+        async function loadProgress() {
+            try {
+                const response = await fetch(PROGRESS_URL + '?t=' + Date.now()); // Cache busting
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').textContent = 
+                    `Erreur lors du chargement: ${error.message}. Vérifie que le fichier progress.json est accessible.`;
+                console.error('Erreur:', error);
+            }
+        }
+
+        function displayData(data) {
+            // Afficher le nom du projet
+            document.getElementById('project-name').textContent = 
+                `Projet: ${data.project || 'Non défini'}`;
+
+            // Statistiques
+            const sessions = data.sessions || [];
+            const topics = data.topics || [];
+            const topicsDone = topics.filter(t => t.done).length;
+            const progressPercent = topics.length > 0 
+                ? Math.round((topicsDone / topics.length) * 100) 
+                : 0;
+
+            document.getElementById('sessions-count').textContent = sessions.length;
+            document.getElementById('topics-done').textContent = `${topicsDone}/${topics.length}`;
+            document.getElementById('progress-percent').textContent = `${progressPercent}%`;
+
+            // Barre de progression
+            const progressFill = document.getElementById('progress-fill');
+            progressFill.style.width = `${progressPercent}%`;
+            progressFill.textContent = `${progressPercent}%`;
+
+            // Afficher les séances
+            const sessionsList = document.getElementById('sessions-list');
+            if (sessions.length === 0) {
+                sessionsList.innerHTML = '<p style="color: #666;">Aucune séance enregistrée.</p>';
+            } else {
+                sessionsList.innerHTML = sessions
+                    .sort((a, b) => (a.session || 0) - (b.session || 0))
+                    .map(session => `
+                        <div class="session-item">
+                            <h4>Séance ${session.session}: ${session.focus || 'Sans titre'}</h4>
+                            <div class="meta">
+                                ${session.timestamp ? new Date(session.timestamp).toLocaleString('fr-FR') : ''}
+                            </div>
+                            ${session.note ? `<p style="margin-top: 10px; color: #666;">${session.note}</p>` : ''}
+                        </div>
+                    `).join('');
+            }
+
+            // Afficher les notions
+            const topicsList = document.getElementById('topics-list');
+            if (topics.length === 0) {
+                topicsList.innerHTML = '<p style="color: #666;">Aucune notion définie.</p>';
+            } else {
+                topicsList.innerHTML = topics.map(topic => `
+                    <div class="topic-item ${topic.done ? 'done' : ''}">
+                        <span class="topic-name">${topic.name}</span>
+                        <span class="badge ${topic.done ? 'done' : 'todo'}">
+                            ${topic.done ? '✅ Acquise' : '🔜 À faire'}
+                        </span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Charger au démarrage
+        loadProgress();
+
+        // Actualiser automatiquement toutes les 30 secondes
+        setInterval(loadProgress, 30000);
+    </script>
+</body>
+</html>
+
