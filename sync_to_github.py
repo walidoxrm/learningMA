@@ -37,7 +37,7 @@ def sync_to_github():
     remote = run_command("git remote get-url origin", check=False)
     if not remote:
         print("⚠️  Aucun dépôt distant configuré.")
-        print("   Configure avec: git remote add origin https://github.com/USERNAME/REPO.git")
+        print("   Configure avec: git remote add origin https://github.com/walidoxrm/learningMA.git")
         return False
     
     # Ajouter progress.json
