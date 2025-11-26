@@ -1,3 +1,30 @@
-GUIDE-HEBERGEMENT.md
-SOLUTION-404.md
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environnements virtuels
+venv/
+env/
+ENV/
+.venv
+
+# Fichiers de l'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Fichiers de test temporaires
 test-dashboard.html
+
+# Fichiers de données générés (optionnel - décommente si tu ne veux pas les versionner)
+# progress.json
+# learn_path.json
+
+# Fichiers de documentation temporaires (optionnel)
+# SOLUTION-404.md
