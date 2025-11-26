@@ -22,9 +22,12 @@ ENV/
 # Fichiers de test temporaires
 test-dashboard.html
 
+# Fichiers de documentation (guides locaux)
+GUIDE-HEBERGEMENT.md
+learn-by-doing.md
+SOLUTION-404.md
+NOTE-GITIGNORE.md
+
 # Fichiers de données générés (optionnel - décommente si tu ne veux pas les versionner)
 # progress.json
 # learn_path.json
-
-# Fichiers de documentation temporaires (optionnel)
-# SOLUTION-404.md
