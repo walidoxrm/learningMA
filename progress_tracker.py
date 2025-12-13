@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Simple CLI to track the learn-by-doing journey.
 Data is stored locally in JSON so it can be shared/versionné.
